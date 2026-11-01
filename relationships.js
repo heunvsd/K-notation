@@ -479,7 +479,7 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet10",
     "name": "Elena × Raoul Dorfman",
-    "bracelet": null,
+    "bracelet": "마지막팔찌1.mp4",
     "artworkCenterX": 709,
     "cover": "기보마지막1_대지 1-01.png",
     "frames": [
@@ -529,7 +529,7 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet11",
     "name": "Yuta × Kou",
-    "bracelet": null,
+    "bracelet": "마지막팔찌2.mp4",
     "cover": "마지막2_대지 1 사본 12-01.png",
     "frames": [
       "마지막2_대지 1 사본 12-23.png",

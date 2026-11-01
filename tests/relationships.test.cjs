@@ -7,9 +7,9 @@ const root = path.join(__dirname, '..');
 const context = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(root, 'relationships.js'), 'utf8'), context);
 const relationships = context.window.KNOTATION_RELATIONSHIPS;
-test('twelve selectable scores, including three awaiting their bracelets', () => {
+test('all twelve scores have matching notation assets and the supplied bracelet videos', () => {
   assert.equal(relationships.length, 12);
-  assert.equal(relationships.filter(r => r.bracelet).length, 9);
+  assert.equal(relationships.filter(r => r.bracelet).length, 11);
   assert.ok(relationships.every(relation => !relation.name.includes("-")));
   for (const relation of relationships) {
     if (relation.bracelet) assert.ok(fs.existsSync(path.join(root, 'assets', relation.bracelet)));
@@ -47,9 +47,9 @@ test('twelve selectable scores, including three awaiting their bracelets', () =>
 test('provided film timecodes match every frame and increase chronologically', () => {
   const endings = ['02:14:13', '02:18:30', '02:08:53', '02:59:04', '02:45:38', '02:15:00', '02:04:44', '02:05:30', '01:30:00', '01:26:33', '01:46:05', '01:32:20'];
   assert.equal(relationships[9].name, 'Elena × Raoul Dorfman');
-  assert.equal(relationships[9].bracelet, null);
+  assert.equal(relationships[9].bracelet.normalize('NFC'), '마지막팔찌1.mp4');
   assert.equal(relationships[10].name, 'Yuta × Kou');
-  assert.equal(relationships[10].bracelet, null);
+  assert.equal(relationships[10].bracelet.normalize('NFC'), '마지막팔찌2.mp4');
   assert.equal(relationships[11].name, 'Kou × Fumi');
   assert.equal(relationships[11].bracelet, null);
   assert.equal(relationships.length, endings.length);
