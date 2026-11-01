@@ -478,7 +478,7 @@ window.KNOTATION_RELATIONSHIPS = [
   },
   {
     "id": "bracelet10",
-    "name": "Elena × Raoul Dorfman",
+    "name": "Elena Torlato-Favrini × Raoul Dorfman",
     "bracelet": "마지막팔찌1.mp4",
     "artworkCenterX": 709,
     "cover": "기보마지막1_대지 1-01.png",
