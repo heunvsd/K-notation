@@ -9,7 +9,7 @@ vm.runInNewContext(fs.readFileSync(path.join(root, 'relationships.js'), 'utf8'),
 const relationships = context.window.KNOTATION_RELATIONSHIPS;
 test('all twelve scores have matching notation assets and the supplied bracelet videos', () => {
   assert.equal(relationships.length, 12);
-  assert.equal(relationships.filter(r => r.bracelet).length, 11);
+  assert.equal(relationships.filter(r => r.bracelet).length, 12);
   assert.ok(relationships.every(relation => !relation.name.includes("-")));
   for (const relation of relationships) {
     if (relation.bracelet) assert.ok(fs.existsSync(path.join(root, 'assets', relation.bracelet)));
@@ -51,7 +51,7 @@ test('provided film timecodes match every frame and increase chronologically', (
   assert.equal(relationships[10].name, 'Yuta × Kou');
   assert.equal(relationships[10].bracelet.normalize('NFC'), '마지막팔찌2.mp4');
   assert.equal(relationships[11].name, 'Kou × Fumi');
-  assert.equal(relationships[11].bracelet, null);
+  assert.equal(relationships[11].bracelet.normalize('NFC'), '마지막3.mp4');
   assert.equal(relationships.length, endings.length);
   relationships.forEach((relation, i) => {
     assert.equal(relation.timecodes.length, relation.frames.length);

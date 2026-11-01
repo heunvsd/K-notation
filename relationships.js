@@ -586,7 +586,7 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet12",
     "name": "Kou × Fumi",
-    "bracelet": null,
+    "bracelet": "마지막3.mp4",
     "artworkCenterX": 706.5,
     "cover": "마지막3_대지 1-01.png",
     "frames": [
