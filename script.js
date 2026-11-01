@@ -225,7 +225,10 @@
       video.pause();
     }, { once: true });
     video.addEventListener("play", () => video.pause());
-    video.src = `assets/${encodeURIComponent(relationship.bracelet)}`;
+    const videoVersion = relationship.braceletVersion
+      ? `?v=${encodeURIComponent(relationship.braceletVersion)}`
+      : "";
+    video.src = `assets/${encodeURIComponent(relationship.bracelet)}${videoVersion}`;
     card.append(video);
     card.addEventListener("click", () => selectRelationship(index));
     gallery.append(card); cards.push(card);

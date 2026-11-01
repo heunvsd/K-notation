@@ -3,7 +3,7 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet1",
     "name": "Jang Haejoon × Song Seorae",
-    "bracelet": "bracelet1.mp4",
+    "bracelet": "장해준송서래다시.mp4",
     "cover": "다시1_대지 1 사본 12-01.png",
     "frames": [
       "다시1_대지 1 사본 12-34.png",
@@ -587,6 +587,7 @@ window.KNOTATION_RELATIONSHIPS = [
     "id": "bracelet12",
     "name": "Kou × Fumi",
     "bracelet": "마지막3.mp4",
+    "braceletVersion": "1b86cb0ee330",
     "artworkCenterX": 706.5,
     "cover": "마지막3_대지 1-01.png",
     "frames": [

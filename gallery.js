@@ -40,7 +40,10 @@
         video.muted = true; video.playsInline = true; video.preload = 'auto';
         video.autoplay = false; video.controls = false; video.tabIndex = -1;
         video.setAttribute('aria-hidden', 'true');
-        video.src = `assets/${encodeURIComponent(relation.bracelet)}`;
+        const videoVersion = relation.braceletVersion
+          ? `?v=${encodeURIComponent(relation.braceletVersion)}`
+          : "";
+        video.src = `assets/${encodeURIComponent(relation.bracelet)}${videoVersion}`;
         video.addEventListener('play', () => video.pause());
       }
       const object = document.createElement('div'); object.className = 'space-object';
