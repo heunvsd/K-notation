@@ -22,9 +22,9 @@
   font-display: swap;
 }
 
-/* Creative Cloud > 210 자막 Regular > Install for other local apps.
-   Use the installed font here; do not copy Adobe's managed font into assets.
-   For public hosting, add an Adobe Fonts web project's embed code in index.html. */
+/* Adobe Fonts loads "jamak" through kit vkf7mtu in index.html.
+   These local faces are optional offline fallbacks, not the public webfont.
+   Adobe maps 210 Jamak Bold to CSS weight 500. */
 @font-face {
   font-family: "Knotation Jamak";
   src: local("TTJamakR"), local("210 Jamak Regular"), local("210 Jamak R");
@@ -37,7 +37,7 @@
   font-family: "Knotation Jamak";
   src: local("TTJamakB"), local("210 Jamak Bold"), local("210 Jamak B");
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-display: swap;
 }
 

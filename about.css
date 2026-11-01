@@ -55,9 +55,9 @@
 }
 .about-page.is-visible .about-copy { opacity: 1; transform: none; }
 .about-korean {
-  font-family: "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
+  font-family: "jamak", "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
   font-size: var(--copy-size);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.725;
   letter-spacing: -.02em;
   word-break: keep-all;
@@ -125,7 +125,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  font: 700 calc(var(--copy-size) * var(--copy-scale))/1.5 "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
+  font: 500 calc(var(--copy-size) * var(--copy-scale))/1.5 "jamak", "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
   letter-spacing: -.02em;
   white-space: pre-line;
   word-break: keep-all;
