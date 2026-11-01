@@ -137,7 +137,7 @@ body { color: var(--ink); -webkit-font-smoothing: antialiased; }
 /* The selected bracelet and selected name share the vertical center. */
 .bracelet-gallery {
   position: absolute;
-  right: var(--margin);
+  right: 0;
   top: var(--margin);
   bottom: var(--margin);
   width: var(--bracelet-width);
