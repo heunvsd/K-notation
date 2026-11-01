@@ -1,0 +1,337 @@
+@font-face {
+  font-family: "Vicentino";
+  src: local("1522VicentinoW03-Regular"), local("1522 Vicentino W03 Regular"), url("assets/fonts/1522-Vicentino-W03-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: local("Source Sans Pro"), url("assets/fonts/SourceSansPro-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: local("Source Sans Pro Italic"), url("assets/fonts/SourceSansPro-It.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Creative Cloud > 210 자막 Regular > Install for other local apps.
+   Use the installed font here; do not copy Adobe's managed font into assets.
+   For public hosting, add an Adobe Fonts web project's embed code in index.html. */
+@font-face {
+  font-family: "Knotation Jamak";
+  src: local("TTJamakR"), local("210 Jamak Regular"), local("210 Jamak R");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knotation Jamak";
+  src: local("TTJamakB"), local("210 Jamak Bold"), local("210 Jamak B");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --paper: #fff;
+  --ink: #111;
+  --artboard-scale: 1;
+  --artboard-height: 1080px;
+  --notation-scale: 1;
+  --notation-center-x: 650px;
+  --timestamp-right: 1260px;
+  --timeline-right: 325px;
+  --bracelet-width: 280px;
+  --bracelet-height: 320px;
+  --margin: 25px;
+  --notation-area-width: 1450px;
+  --notation-area-right: calc(100% - var(--margin) - var(--notation-area-width));
+  --timestamp-line: 19pt; /* About 25.33px at the 1920 × 1080 design size */
+  --timestamp-width: 180px;
+  --caption-gap: 50px;
+  --time-font-size: 13pt;
+  --timeline-font-size: 12pt;
+  --caption-font-size: 8pt;
+  --motion-duration: 440ms;
+  --motion-easing: cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+body { color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+/* The page fills the viewport. Its four edge margins use the same scale. */
+.artboard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: var(--artboard-height);
+  isolation: isolate;
+  transform-origin: top left;
+  transform: scale(var(--artboard-scale));
+}
+
+.notation-plane {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: var(--notation-center-x) 540px;
+  transform: translateY(-50%) scale(calc(var(--notation-scale) * 1.04));
+  pointer-events: none;
+}
+
+.notation {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Keep the artwork and top time on the same axis, leaving the right for jewelry. */
+.notation { object-fit: contain; transform: translate(calc(var(--notation-center-x) - var(--artwork-center-x, 749.75px)), -14.5px); }
+
+/* Trim the title's transparent padding without editing the supplied PNG.
+   Original ink bounds: (9, 5)–(1144, 389), displayed at one fifth size. */
+.title-art {
+  position: absolute;
+  left: var(--margin);
+  top: var(--margin);
+  width: 227px;
+  height: 76.8px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.title-art img {
+  display: block;
+  width: 267px;
+  height: 84px;
+  max-width: none;
+  transform: translate(-1.8px, -1px);
+}
+
+/* The selected bracelet and selected name share the vertical center. */
+.bracelet-gallery {
+  position: absolute;
+  right: var(--margin);
+  top: var(--margin);
+  bottom: var(--margin);
+  width: var(--bracelet-width);
+  overflow: clip;
+  mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24%, #000 76%, transparent);
+}
+.bracelet-card {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: var(--bracelet-width);
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+  transition: transform var(--motion-duration) var(--motion-easing), opacity var(--motion-duration) ease;
+}
+.bracelet-card video { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.relationship-list {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  width: var(--relationship-width, 280px);
+  right: var(--timeline-right);
+  height: 420px;
+  transform: translateY(-50%);
+  overflow: clip;
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+}
+.relationship-name {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  min-height: 28px;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: #777;
+  font: var(--timeline-font-size)/16pt "Vicentino", Georgia, serif;
+  letter-spacing: -0.025em;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--motion-duration) var(--motion-easing), opacity var(--motion-duration) ease, color var(--motion-duration) ease;
+}
+.relationship-name[aria-pressed="true"] { color: #000; }
+.section-menu {
+  position: absolute;
+  left: max(var(--margin), calc(11px / var(--artboard-scale)));
+  top: 50%;
+  transform: translateY(-50%);
+  width: max-content;
+  display: grid;
+  row-gap: calc(clamp(16px, 5.5vh, 60px) / var(--artboard-scale));
+  font: 400 max(18px, calc(13px / var(--artboard-scale))) / 1.25 "Vicentino", Georgia, serif;
+  letter-spacing: -.025em;
+}
+.section-menu button {
+  padding: .12em 0 .19em;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.section-menu button span { display: inline-block; white-space: nowrap; }
+.section-menu button span::after {
+  --rule-size: max(1px, calc(1px / var(--artboard-scale)));
+  content: "";
+  /* An empty inline-block's bottom edge sits on the text baseline.
+     Fold it back over the word and move its top just below that baseline. */
+  display: inline-block;
+  vertical-align: baseline;
+  width: 100%;
+  margin-inline-start: -100%;
+  height: var(--rule-size);
+  position: relative;
+  top: calc(var(--rule-size) + .08em);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 170ms ease-out;
+}
+@media (hover: hover) {
+  .section-menu button:hover span::after { transform: scaleX(1); }
+}
+.section-menu button:focus-visible { outline: none; }
+.section-menu button:focus-visible span::after { transform: scaleX(1); }
+@media (pointer: coarse) {
+  .section-menu button { min-height: calc(44px / var(--artboard-scale)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-menu button span::after { transition: none; }
+}
+.is-repositioning { transition: none !important; }
+.bracelet-card:focus-visible { outline: 1px solid #777; outline-offset: -2px; }
+.relationship-heading {
+  position: absolute; left: var(--margin); top: var(--margin);
+  max-width: 380px; white-space: pre-line; margin: 0; font-weight: 400;
+  font: 19pt/25pt "Vicentino", Georgia, serif;
+}
+.film-time {
+  position: absolute;
+  top: var(--margin);
+  left: var(--notation-center-x);
+  transform: translateX(-50%);
+  font-family: "Vicentino", Georgia, serif;
+  font-size: var(--time-font-size);
+  line-height: 24pt;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.film-description {
+  position: absolute;
+  left: var(--margin);
+  bottom: var(--margin);
+  width: max-content;
+  font-family: "Vicentino", Georgia, serif;
+  font-size: 10pt;
+  line-height: 14pt;
+  letter-spacing: -0.01em; /* Adobe tracking -10 */
+  font-weight: 400;
+}
+
+.film-description p { margin: 0; white-space: pre; }
+.film-description em { font-style: italic; }
+
+/* Keep the control above the text column and to the left of the jewelry area. */
+.motion-toggle {
+  position: absolute;
+  right: var(--timeline-right);
+  top: var(--margin);
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  padding: 5px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.motion-toggle svg { grid-area: 1 / 1; width: 22px; height: 22px; fill: currentColor; }
+.motion-toggle .pause-icon { display: none; }
+.motion-toggle[aria-pressed="true"] .play-icon { display: none; }
+.motion-toggle[aria-pressed="true"] .pause-icon { display: block; }
+.motion-toggle:hover { color: #777; }
+.motion-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.playback-error { position: absolute; top: 65px; right: var(--notation-area-right); max-width: 330px; font: 14px/1.5 "Source Sans Pro", sans-serif; }
+.no-script { position: absolute; right: 25px; bottom: 25px; font: 14px sans-serif; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-duration: 0ms; }
+}
+
+.motion-toggle:disabled { opacity: 0.18; cursor: default; }
+.notation[hidden], .relationship-heading[hidden] { display: none; }
+
+.relationship-name span { white-space: nowrap; }
+
+/* Titling alternate for the second t, preserving real text. */
+.title-swash { font-feature-settings: "titl" 1; }
+
+/* Align the tall title swash with the page margin. */
+#film-title { top: calc(var(--margin) + 18px); }
+
+.film-description .film-year { letter-spacing: -0.06em; }
+
+.relationship-name:focus { outline: none; }
+/* The rail uses contrast for keyboard focus as well as selection. */
+.relationship-name:focus-visible:not([aria-pressed="true"]) {
+  color: var(--ink);
+  opacity: 1 !important; /* Override the inline distance fade while tabbing. */
+}

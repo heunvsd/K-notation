@@ -1,0 +1,151 @@
+.theme-notation { position: absolute; inset: 0; pointer-events: none; transition: opacity 350ms ease; }
+.artboard.is-about .theme-notation { opacity: 0; }
+
+.bracelet-gallery { transition: translate 950ms cubic-bezier(.65,0,.25,1); }
+.relationship-list { transition: translate 950ms cubic-bezier(.65,0,.25,1), opacity 600ms ease; }
+.film-time, .motion-toggle, .film-description { transition: opacity 280ms ease, translate 550ms cubic-bezier(.22,.7,.2,1); }
+.artboard.is-about .bracelet-gallery { translate: calc(100% + var(--margin) + 10px) 0; }
+.artboard.is-about .relationship-list { translate: 650px 0; opacity: 0; }
+.artboard.is-about :is(.film-time, .motion-toggle) { opacity: 0; translate: 0 -12px; }
+.artboard.is-about .film-description { opacity: 0; translate: 0 12px; }
+
+.about-page {
+  --copy-size: clamp(10.5px, min(.7vw, 1.62dvh), 12.5px);
+  --copy-scale: .9;
+  position: fixed;
+  inset: 0;
+  height: 100dvh;
+  z-index: 2;
+  overflow: clip;
+  isolation: isolate;
+  outline: none;
+  display: grid;
+  place-items: start end;
+}
+.about-page[hidden] { display: none; }
+.about-page.via-gallery { background: var(--paper); }
+
+.ink-viewport { position: absolute; inset: 0; overflow: clip; opacity: 0; transition: opacity 220ms ease; }
+.about-page.is-visible .ink-viewport { opacity: 1; }
+
+.about-copy {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: min(23.8em, calc(100% - 80px));
+  margin-inline-end: clamp(12px, calc(5.8vw - 46px), 70px);
+  /* Centre of the logo's visible ink, less the leading above the first Korean glyph. */
+  margin-block-start: calc((var(--margin) + 34px) * var(--artboard-scale) - .315em * var(--copy-scale));
+  scale: var(--copy-scale);
+  transform-origin: top right;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 300ms ease, transform 350ms ease;
+}
+/* Lighten the ink locally so each paragraph stays legible as a stroke passes behind it. */
+.about-copy::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -.35em -.85em;
+  background: var(--paper);
+  opacity: .78;
+  filter: blur(12px);
+}
+.about-page.is-visible .about-copy { opacity: 1; transform: none; }
+.about-korean {
+  font-family: "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
+  font-size: var(--copy-size);
+  font-weight: 700;
+  line-height: 1.725;
+  letter-spacing: -.02em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.about-copy p {
+  margin: 0 0 .82em;
+  -webkit-text-stroke: 2.5px var(--paper);
+  paint-order: stroke fill;
+  text-shadow: 0 0 3px var(--paper);
+}
+.about-copy p:last-child { margin-bottom: 0; }
+@media (min-width: 601px) and (min-height: 481px) and (max-height: 800px) {
+  .about-korean { line-height: 1.645; }
+  .about-page { --copy-scale: .83; }
+}
+@media (min-width: 601px) and (min-height: 481px) and (max-height: 730px) {
+  .about-copy p:not(:last-child) { margin-bottom: .52em; }
+}
+@media (max-width: 600px), (max-height: 480px) {
+  .about-page { --copy-scale: .96; }
+}
+@media (max-width: 600px) {
+  .about-copy {
+    width: min(23.8em, calc(100% - 56px));
+    margin-inline-end: max(4px, env(safe-area-inset-right, 0px));
+  }
+  .about-page { --copy-size: 10.75px; }
+  .about-korean { line-height: 1.675; }
+  .about-copy p { margin-block-end: .7em; }
+  .about-copy p:last-child { margin-bottom: 0; }
+}
+@media (max-width: 600px) and (max-height: 670px) {
+  .about-page { --copy-size: clamp(10px, 1.65dvh, 10.75px); }
+  .about-korean { line-height: 1.52; }
+}
+@media (max-width: 499px) and (max-height: 520px) {
+  .about-page { --copy-size: 9.5px; }
+  .about-korean { line-height: 1.41; }
+}
+@media (max-height: 480px) and (min-width: 500px) {
+  .about-copy { width: min(calc(100% - 72px), 37.5em); }
+  .about-page { --copy-size: clamp(9.5px, 2.85dvh, 10.75px); }
+  .about-korean { line-height: 1.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-notation, .bracelet-gallery, .relationship-list, .film-time, .motion-toggle, .film-description, .about-copy, .ink-viewport { transition: none !important; }
+}
+.ink-viewport:focus-visible { outline: 1px dotted #888; outline-offset: -2px; }
+.ink-stage { display: block; width: 100%; height: 100%; overflow: hidden; }
+.ink-area { fill: transparent; pointer-events: visibleFill; cursor: grab; touch-action: pan-y; }
+.ink-piece { outline: none; pointer-events: none; }
+.ink-piece image { pointer-events: none; user-select: none; }
+.ink-hit {
+  pointer-events: visiblePainted;
+  fill: transparent; stroke: transparent; stroke-width: 12px;
+  stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  touch-action: none; cursor: grab;
+}
+.ink-stage.is-holding, .ink-stage.is-holding .ink-piece * { cursor: grabbing; }
+.ink-piece:focus-visible .ink-hit { stroke: rgba(0,0,0,.12); }
+.ink-reader {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  font: 700 calc(var(--copy-size) * var(--copy-scale))/1.5 "Knotation Jamak", "Apple SD Gothic Neo", sans-serif;
+  letter-spacing: -.02em;
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-align: center;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  margin: 0;
+  pointer-events: none;
+  color: var(--ink);
+  -webkit-text-stroke: calc(2.5px * var(--copy-scale)) #fff;
+  paint-order: stroke fill;
+  text-shadow: 0 0 2px #fff;
+  /* Keep the definition upright on its mark and inside the screen edges. */
+  transform: translate(
+    clamp(12px, calc(var(--ink-x) - 50%), calc(var(--field-width) - 100% - 12px)),
+    clamp(12px, calc(var(--ink-y) - 100% - 2px), calc(var(--field-height) - 100% - 12px))
+  );
+}
+.ink-reader[hidden] { display:none; }
+@media (pointer: coarse) {
+  .ink-hit { stroke-width: 21px; }
+}

@@ -1,0 +1,33 @@
+:root { --relationship-label-size: clamp(11px, calc(100vw * 14 / 1920), 18px); }
+/* An opaque moving panel keeps the MP4 backgrounds on black throughout the transition. */
+.gallery-space { position: fixed; inset: 0; z-index: 5; overflow: hidden; background: #000; color: #fff; isolation: isolate; font-family: "Vicentino", Georgia, serif; will-change: transform; }
+.gallery-space[hidden] { display: none; }
+.space-stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; outline: none; }
+.space-stage.is-dragging, .space-stage.is-dragging .space-turntable { cursor: grabbing; }
+.space-object { position: absolute; left: 0; top: 0; width: 280px; height: 280px; transform-origin: 0 0; mix-blend-mode: screen; will-change: transform; }
+.space-turntable { width: 100%; height: 100%; display: block; border: 0; padding: 0; background: #000; color: #fff; cursor: ew-resize; touch-action: none; }
+.space-turntable video, .space-return-frame { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.space-handle-layer { position: absolute; inset: 0; z-index: 110; pointer-events: none; }
+.space-move-handle { position: absolute; left: 0; top: 0; width: 36px; height: 36px; padding: 11px; border: 0; border-radius: 0; background: transparent; color: #fff; cursor: grab; touch-action: none; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 180ms; }
+.gallery-space[data-phase="open"] .space-move-handle { opacity: 1; visibility: visible; pointer-events: auto; }
+.space-move-handle svg { display: block; width: 100%; height: 100%; fill: currentColor; stroke: #000; stroke-width: 1.2px; paint-order: stroke fill; filter: drop-shadow(0 1px 2px #000); }
+.space-move-handle.is-edge { background: transparent; box-shadow: none; }
+.space-move-handle.is-dragging { cursor: grabbing; }
+.space-move-handle:hover { background: transparent; }
+.space-move-handle:focus { outline: none; box-shadow: none; }
+.space-move-handle:focus-visible::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 1px; background: #fff; }
+.space-label-layer { position: absolute; inset: 0; z-index: 100; pointer-events: none; }
+.space-label { font-size: var(--relationship-label-size); position: absolute; left: 0; top: 0; -webkit-text-stroke: 1.5px #000; paint-order: stroke fill; text-shadow: 0 0 2px #000, 0 1px 1px #000; color: #fff; font-family: "Vicentino", Georgia, serif; font-weight: 400; line-height: 1.25; letter-spacing: -.025em; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 300ms; }
+.gallery-space.is-open .space-label { opacity: 1; transition-delay: 500ms; }
+.space-turntable:focus-visible { outline: none; }
+.space-label.is-focused { text-decoration: underline; text-underline-offset: 4px; }
+.space-label.has-media-error::after { content: " / Video unavailable"; }
+/* White difference-blended lettering follows the edge of the black panel. */
+.site-chrome { position: fixed; left: 0; top: 0; width: 1920px; height: var(--artboard-height); transform: scale(var(--artboard-scale)); transform-origin: 0 0; z-index: 10; pointer-events: none; mix-blend-mode: difference; color: #eee; }
+.site-chrome .relationship-heading { color: #eee; }
+.site-chrome .section-menu { pointer-events: none; color: #aaa; }
+.site-chrome .section-menu [aria-current="page"] { color: #eee; }
+.artboard { z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .gallery-space * { transition-duration: 0ms !important; transition-delay: 0ms !important; }
+}
