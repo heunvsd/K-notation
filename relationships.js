@@ -529,7 +529,8 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet11",
     "name": "Yuta × Kou",
-    "bracelet": "마지막팔찌2.mp4",
+    "bracelet": "마지막3.mp4",
+    "braceletVersion": "1b86cb0ee330",
     "cover": "마지막2_대지 1 사본 12-01.png",
     "frames": [
       "마지막2_대지 1 사본 12-23.png",
@@ -586,8 +587,7 @@ window.KNOTATION_RELATIONSHIPS = [
   {
     "id": "bracelet12",
     "name": "Kou × Fumi",
-    "bracelet": "마지막3.mp4",
-    "braceletVersion": "1b86cb0ee330",
+    "bracelet": "마지막팔찌2.mp4",
     "artworkCenterX": 706.5,
     "cover": "마지막3_대지 1-01.png",
     "frames": [

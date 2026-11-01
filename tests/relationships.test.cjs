@@ -49,9 +49,9 @@ test('provided film timecodes match every frame and increase chronologically', (
   assert.equal(relationships[9].name, 'Elena Torlato-Favrini × Raoul Dorfman');
   assert.equal(relationships[9].bracelet.normalize('NFC'), '마지막팔찌1.mp4');
   assert.equal(relationships[10].name, 'Yuta × Kou');
-  assert.equal(relationships[10].bracelet.normalize('NFC'), '마지막팔찌2.mp4');
+  assert.equal(relationships[10].bracelet.normalize('NFC'), '마지막3.mp4');
   assert.equal(relationships[11].name, 'Kou × Fumi');
-  assert.equal(relationships[11].bracelet.normalize('NFC'), '마지막3.mp4');
+  assert.equal(relationships[11].bracelet.normalize('NFC'), '마지막팔찌2.mp4');
   assert.equal(relationships.length, endings.length);
   relationships.forEach((relation, i) => {
     assert.equal(relation.timecodes.length, relation.frames.length);
