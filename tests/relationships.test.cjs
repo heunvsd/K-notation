@@ -26,7 +26,7 @@ test('all twelve scores have matching notation assets and the supplied bracelet 
   const supplied = fs.readdirSync(path.join(root, 'assets'))
     .filter(file => file.normalize('NFC').startsWith('다시1_') && file.endsWith('.png'));
   assert.deepEqual([...new Set(relationships[0].frames)].sort(), supplied.sort());
-  for (const [index, prefix] of [[1, '다시2_'], [2, '다시3_'], [3, '다시4_'], [4, '다시5_'], [5, '다시7_'], [6, '다시6_'], [7, '다시8_'], [8, '다시9_'], [9, '기보마지막1_'], [10, '마지막2_'], [11, '마지막3_']]) {
+  for (const [index, prefix] of [[1, '다시2_'], [2, '다시3_'], [3, '다시4_'], [4, '다시5_'], [5, '다시7_'], [6, '다시6_'], [7, '다시8_'], [8, '다시9_'], [9, '기보마지막1_'], [11, '마지막3_']]) {
     const exported = fs.readdirSync(path.join(root, 'assets'))
       .filter(file => file.normalize('NFC').startsWith(prefix) && file.endsWith('.png'));
     assert.deepEqual([...new Set(relationships[index].frames)].sort(), exported.sort());
@@ -35,13 +35,26 @@ test('all twelve scores have matching notation assets and the supplied bracelet 
   assert.equal(relationships[1].frames.length, 24);
   assert.ok(relationships[1].cover.endsWith('1-01.png'));
   relationships[1].frames.forEach((file, i) => assert.ok(file.endsWith(`1-${String(24 - i).padStart(2, '0')}.png`)));
-  for (const [index, count] of [[2, 8], [3, 25], [4, 10], [6, 19], [8, 28], [9, 19], [10, 23], [11, 9]]) {
+  for (const [index, count] of [[2, 8], [3, 25], [4, 10], [6, 19], [8, 28], [9, 19], [11, 9]]) {
     const relation = relationships[index];
     assert.equal(relation.frames.length, count);
     assert.ok(relation.cover.endsWith('-01.png'));
     relation.frames.forEach((file, i) => assert.ok(file.endsWith(`-${String(count - i).padStart(2, '0')}.png`)));
   }
 
+});
+
+test('Yuta and Kou play the extra frame immediately before artboard 08', () => {
+  const relation = relationships.find(r => r.name === 'Yuta × Kou');
+  const exports = fs.readdirSync(path.join(root, 'assets')).map(file => file.normalize('NFC'))
+    .filter(file => /^마지막2_.*12-\d{2}\.png$/.test(file)).sort().reverse();
+  assert.equal(exports.length, 23);
+  const before08 = exports.findIndex(file => file.endsWith('12-08.png'));
+  assert.equal(before08, 15);
+  exports.splice(before08, 0, '유타코우추가.png');
+  assert.deepEqual(Array.from(relation.frames, file => file.normalize('NFC')), exports);
+  assert.equal(relation.cover, relation.frames.at(-1));
+  assert.deepEqual(Array.from(relation.timecodes.slice(14, 17)), ['01:06:45', '01:08:00', '01:09:14']);
 });
 
 test('provided film timecodes match every frame and increase chronologically', () => {
